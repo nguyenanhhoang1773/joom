@@ -1,11 +1,35 @@
+'use client';
 import MeetingTypeList from '@/components/MeetingTypeList';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { useUser } from '@clerk/nextjs';
 
 const Home = () => {
   const now = new Date();
-
-  const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-  const date = (new Intl.DateTimeFormat('en-US', { dateStyle: 'full' })).format(now);
-
+  const { user } = useUser();
+  const time = now.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'full' }).format(
+    now,
+  );
+  useEffect(() => {
+    if (!user) return;
+    axios
+      .post('/api/users', {
+        firt_name: user.firstName,
+        last_name: user.lastName,
+        email: user.emailAddresses,
+        last_sign_in: user.lastSignInAt?.toString(),
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
   return (
     <section className="flex size-full flex-col gap-5 text-white">
       <div className="h-[303px] w-full rounded-[20px] bg-hero bg-cover">

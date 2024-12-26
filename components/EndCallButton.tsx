@@ -4,6 +4,7 @@ import { useCall, useCallStateHooks } from '@stream-io/video-react-sdk';
 
 import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const EndCallButton = () => {
   const call = useCall();
@@ -28,6 +29,16 @@ const EndCallButton = () => {
   const endCall = async () => {
     await call.endCall();
     router.push('/');
+    axios
+      .post('/api/updateRoom', {
+        id: call.id,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (

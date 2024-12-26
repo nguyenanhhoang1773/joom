@@ -13,6 +13,8 @@ import { Textarea } from './ui/textarea';
 import ReactDatePicker from 'react-datepicker';
 import { useToast } from './ui/use-toast';
 import { Input } from './ui/input';
+import axios from 'axios';
+import { hostname } from 'os';
 
 const initialValues = {
   dateTime: new Date(),
@@ -53,6 +55,21 @@ const MeetingTypeList = () => {
         },
       });
       setCallDetail(call);
+      console.log('console:' + user.firstName);
+      console.log('console:' + user.lastName);
+      console.log('console:' + user.emailAddresses);
+      console.log('console:' + user.lastSignInAt);
+      axios
+        .post('/api/rooms', {
+          id: call.id,
+          hostname: user.fullName,
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       if (!values.description) {
         router.push(`/meeting/${call.id}`);
       }
