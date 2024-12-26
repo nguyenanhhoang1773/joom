@@ -9,15 +9,14 @@ export default async function handler(
   res: NextApiResponse<ResponseData>,
 ) {
   if (req.method === 'POST') {
-    const { firt_name, last_name, email, last_sign_in } = req.body;
+    const { firstName, lastName, email, lastSignIn } = req.body;
     const emailAddress = email[0].emailAddress;
     const prequery =
       await sql`SELECT * FROM users WHERE email = ${emailAddress};`;
     console.log(prequery);
     if (prequery.rowCount) return;
-    const query =
-      await sql`INSERT INTO users (first_name ,last_name , email,last_sign_in)
-    VALUES (${firt_name}, ${last_name},${emailAddress}, ${last_sign_in});`;
+    await sql`INSERT INTO users (first_name ,last_name , email,last_sign_in)
+    VALUES (${firstName}, ${lastName},${emailAddress}, ${lastSignIn});`;
     res.status(200);
     // Process a POST request
   } else {

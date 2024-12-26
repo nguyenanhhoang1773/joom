@@ -18,10 +18,10 @@ const Home = () => {
     if (!user) return;
     axios
       .post('/api/users', {
-        firt_name: user.firstName,
-        last_name: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.emailAddresses,
-        last_sign_in: user.lastSignInAt?.toString(),
+        lastSignIn: user.lastSignInAt?.toString(),
       })
       .then(function (response) {
         console.log(response);

@@ -11,7 +11,7 @@ export default async function handler(
   if (req.method === 'POST') {
     const { id, hostname } = req.body;
     console.log(req.body);
-    const query = await sql`INSERT INTO rooms (id, hostname, finished)
+    await sql`INSERT INTO rooms (id, hostname, finished)
     VALUES (${id}, ${hostname},false);`;
     res.status(200);
     // Process a POST request

@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     const { id } = req.body;
-    const query = await sql`UPDATE rooms
+    await sql`UPDATE rooms
 SET finished = true
 WHERE id = ${id};`;
     res.status(200);
